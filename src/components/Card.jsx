@@ -39,13 +39,9 @@ export function ProductCard({ product }) {
 
   return (
     // <Card className="mt-6 w-96">
-    <Card className="mt-6 w-full max-w-sm">
+    <Card className="mt-6 w-full max-w-sm ">
       <CardHeader color="blue-gray" className="relative h-56">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover"/>
       </CardHeader>
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">

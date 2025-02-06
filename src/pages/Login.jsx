@@ -42,6 +42,7 @@ const Login = () => {
           password,
         });
         const token = response.data.tokens.access.token;
+        console.log(token);
         setToken(token);
         setEmail("");
         setPassword("");
