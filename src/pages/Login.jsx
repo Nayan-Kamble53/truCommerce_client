@@ -120,69 +120,6 @@ const Login = () => {
           </CardFooter>
         </form>
       </Card>
-
-      {/* <Card color="transparent" shadow={false}>
-        <Typography variant="h3" color="blue-gray">
-          {currentState === "sign-up" ? "Sign up" : "Login"}
-        </Typography>
-        <Typography className="font-normal">Nice to meet You!</Typography>
-        <form
-          onSubmit={handleSubmit}
-          className=" mt-4 w-80 max-w-screen-lg sm:w-96"
-        >
-          <div className="mb-2">
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="tracking-wide"
-            >
-              Email
-            </Typography>
-            <Input
-              size="lg"
-              placeholder="name@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="tracking-wide"
-            >
-              Password
-            </Typography>
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <Typography className="text-right">
-            {currentState === "sign-up" ? (
-              <span
-                className="cursor-pointer text-sm text-gray-900 mt-1"
-                onClick={() => setCurrentState("login")}
-              >
-                Already have an account? Log In
-              </span>
-            ) : (
-              <span
-                className="cursor-pointer text-sm text-gray-900 mt-1"
-                onClick={() => setCurrentState("sign-up")}
-              >
-                Don't have an account? Sign up
-              </span>
-            )}
-          </Typography>
-          <Button type="submit" fullWidth className="mt-4">
-            {currentState === "sign-up" ? "Sign Up" : "Sign In"}
-          </Button>
-        </form>
-      </Card> */}
     </div>
   );
 };

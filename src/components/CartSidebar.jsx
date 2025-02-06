@@ -2,20 +2,21 @@ import { FaShoppingCart } from "react-icons/fa";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  // SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "./ui/separator";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { shopContext } from "@/context/ShopContext";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { CardWithForm } from "./CartItem";
 
 const Sidebar = () => {
   const { token, backendUrl } = useContext(shopContext);
-  const [cartProducts, setCartProducts] = useState([]);
+  // const [cartProducts, setCartProducts] = useState([]);
 
   const getCartItems = async () => {
     console.log("first");
@@ -48,6 +49,7 @@ const Sidebar = () => {
         </SheetHeader>
 
         {/* main content */}
+        <CardWithForm/>
       </SheetContent>
     </Sheet>
   );
