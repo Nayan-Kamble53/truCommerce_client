@@ -44,6 +44,7 @@ const Login = () => {
         });
         console.log(response);
         const token = response.data.tokens.access.token;
+        console.log(token);
         setToken(token);
         const refreshToken = response.data.tokens.refresh.token;
         setRefreshToken(refreshToken);
