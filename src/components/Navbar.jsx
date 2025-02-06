@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { FaShoppingCart } from "react-icons/fa";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import Sidebar from "./CartSidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -19,20 +16,34 @@ const Navbar = () => {
     <nav className="shadow-md bg-indigo-500">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-xl font-bold text-gray-800 flex items-center">
+        <Link
+          to="/"
+          className="text-xl font-bold text-gray-800 flex items-center"
+        >
           <img src={logo} alt="Logo" className="mr-2 w-[100%] h-10" />
         </Link>
 
         {/* Navigation Links */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/" className="text-gray-300 hover:text-blue-500">Home</Link>
-          <Link to="/about" className="text-gray-300 hover:text-blue-500">About</Link>
-          <Link to="/contact" className="text-gray-300 hover:text-blue-500">Contact</Link>
+          <Link to="/" className="text-gray-300 hover:text-blue-500">
+            Home
+          </Link>
+          <Link to="/about" className="text-gray-300 hover:text-blue-500">
+            About
+          </Link>
+          <Link to="/contact" className="text-gray-300 hover:text-blue-500">
+            Contact
+          </Link>
         </div>
 
         {/* Buttons and Profile */}
         <div className="flex items-center space-x-4">
-          <Link to="/login" className="px-4 py-2 border rounded-lg text-gray-300 hover:bg-blue-300">Login</Link>
+          <Link
+            to="/login"
+            className="px-4 py-2 border rounded-lg text-gray-300 hover:bg-blue-300"
+          >
+            Login
+          </Link>
 
           {/* Avatar Dropdown */}
           <DropdownMenu>
@@ -49,15 +60,15 @@ const Navbar = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-500">
-                <button onClick={() => console.log("Logging out...")}>Logout</button>
+                <button onClick={() => console.log("Logging out...")}>
+                  Logout
+                </button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           {/* Cart Icon */}
-          <div className="relative cursor-pointer">
-            <FaShoppingCart className="text-2xl text-gray-300" />
-          </div>
+          <Sidebar />
         </div>
       </div>
     </nav>
