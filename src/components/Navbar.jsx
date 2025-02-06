@@ -10,8 +10,24 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { useContext } from "react";
+import { shopContext } from "@/context/ShopContext";
+import axios from "axios";
 
 const Navbar = () => {
+  const { token, backendUrl, refreshToken } = useContext(shopContext);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(backendUrl + "/v1/auth/logout", { refreshToken });
+      localStorage.setItem("token", "");
+      localStorage.setItem("refresh-token", "");
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav className="shadow-md bg-indigo-500">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -38,12 +54,14 @@ const Navbar = () => {
 
         {/* Buttons and Profile */}
         <div className="flex items-center space-x-4">
-          <Link
-            to="/login"
-            className="px-4 py-2 border rounded-lg text-gray-300 hover:bg-blue-300"
-          >
-            Login
-          </Link>
+          {!token && (
+            <Link
+              to="/login"
+              className="px-4 py-2 border rounded-lg text-gray-300 hover:bg-blue-300"
+            >
+              Login
+            </Link>
+          )}
 
           {/* Avatar Dropdown */}
           <DropdownMenu>
@@ -54,17 +72,22 @@ const Navbar = () => {
               </Avatar>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-48">
-              <DropdownMenuItem>
-                <Link to="/profile">Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-500">
-                <button onClick={() => console.log("Logging out...")}>
-                  Logout
-                </button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
+            {token && (
+              <DropdownMenuContent className="w-48">
+                <DropdownMenuItem>
+                  <Link to="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-red-500 cursor-pointer">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full h-full text-left"
+                  >
+                    Logout
+                  </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            )}
           </DropdownMenu>
 
           {/* Cart Icon */}
