@@ -1,3 +1,4 @@
+import { shopContext } from "@/context/ShopContext";
 import {
   Card,
   CardHeader,
@@ -6,8 +7,36 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { useContext, useState } from "react";
 
 export function ProductCard({ product }) {
+  const { token, navigate, backendUrl } = useContext(shopContext);
+  const [cartId, setCartId] = useState("");
+
+  const addToCart = async (productId) => {
+    try {
+      if (!token) {
+        console.log("clicked");
+        navigate("/login");
+      }
+
+      const token_decode = jwtDecode(token);
+      const response = await axios.post(
+        backendUrl + "/v1/cart/",
+        {
+          productId,
+          quantity: 1,
+        },
+        { headers: { Authorization: "Bearer " + token } }
+      );
+      setCartId(response.data.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     // <Card className="mt-6 w-96">
     <Card className="mt-6 w-full max-w-sm">
@@ -30,7 +59,7 @@ export function ProductCard({ product }) {
         <Typography variant="h6" color="blue-gray">
           ${product.price}
         </Typography>
-        <Button>Add to cart</Button>
+        <Button onClick={() => addToCart(product.id)}>Add to cart</Button>
       </CardFooter>
     </Card>
   );
