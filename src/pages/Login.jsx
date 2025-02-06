@@ -16,10 +16,11 @@ import { Input } from "@/components/ui/input";
 
 const Login = () => {
   // context providers
-  const { backendUrl, setToken } = useContext(shopContext);
+  const { backendUrl, setToken, setRefreshToken, navigate } =
+    useContext(shopContext);
 
   // login?signup state
-  const [currentState, setCurrentState] = useState("sign-up");
+  const [currentState, setCurrentState] = useState("login");
 
   //   controlled input state
   const [email, setEmail] = useState("");
@@ -41,11 +42,16 @@ const Login = () => {
           email,
           password,
         });
+        console.log(response);
         const token = response.data.tokens.access.token;
         console.log(token);
         setToken(token);
+        const refreshToken = response.data.tokens.refresh.token;
+        setRefreshToken(refreshToken);
         setEmail("");
         setPassword("");
+        toast.success("Login Successfully");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

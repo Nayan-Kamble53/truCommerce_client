@@ -16,10 +16,12 @@ export function ProductCard({ product }) {
   const [cartId, setCartId] = useState("");
 
   const addToCart = async (productId) => {
+    console.log("working");
     try {
       if (!token) {
         console.log("clicked");
         navigate("/login");
+        console.log("user not login");
       }
 
       // const token_decode = jwtDecode(token);
@@ -31,6 +33,7 @@ export function ProductCard({ product }) {
         },
         { headers: { Authorization: "Bearer " + token } }
       );
+      console.log(response);
       setCartId(response.data.id);
     } catch (error) {
       console.log(error);

@@ -19,6 +19,7 @@ const Sidebar = () => {
   // const [cartProducts, setCartProducts] = useState([]);
 
   const getCartItems = async () => {
+    console.log("first");
     try {
       const token_decode = jwtDecode(token);
       const userId = token_decode.sub;

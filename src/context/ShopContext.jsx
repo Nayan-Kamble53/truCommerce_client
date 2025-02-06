@@ -10,12 +10,25 @@ const ShopContextProvider = ({ children }) => {
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
+  const [refreshToken, setRefreshToken] = useState(
+    localStorage.getItem("refresh-token")
+      ? localStorage.getItem("refresh-token")
+      : ""
+  );
 
   useEffect(() => {
     localStorage.setItem("token", token);
+    localStorage.setItem("refresh-token",refreshToken);
   }, [token]);
 
-  const value = { backendUrl, token, setToken, navigate};
+  const value = {
+    backendUrl,
+    token,
+    setToken,
+    refreshToken,
+    setRefreshToken,
+    navigate,
+  };
 
   return <shopContext.Provider value={value}>{children}</shopContext.Provider>;
 };
