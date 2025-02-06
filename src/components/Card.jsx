@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { useContext, useState } from "react";
 
 export function ProductCard({ product }) {
@@ -22,7 +22,7 @@ export function ProductCard({ product }) {
         navigate("/login");
       }
 
-      const token_decode = jwtDecode(token);
+      // const token_decode = jwtDecode(token);
       const response = await axios.post(
         backendUrl + "/v1/cart/",
         {
@@ -50,7 +50,7 @@ export function ProductCard({ product }) {
         <Typography className="text-sm text-gray-600 line-clamp-3">
           {product.description}
         </Typography>
-      </CardBody>
+      </CardBody> 
       <CardFooter className="pt-0">
         <Typography variant="h6" color="blue-gray">
           ${product.price}
