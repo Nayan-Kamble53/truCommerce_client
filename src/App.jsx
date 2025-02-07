@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="h-full w-full bg-indigo-300">
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />

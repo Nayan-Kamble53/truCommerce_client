@@ -1,26 +1,72 @@
+import { Card } from "@/components/ui/card";
+import { useContext, useEffect, useState } from "react";
+import { shopContext } from "../context/ShopContext.jsx";
+import { MdDelete } from "react-icons/md";
 import {
-  Card,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card"
-import { Typography } from "@material-tailwind/react"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip.jsx";
+import { Button } from "./ui/button.jsx";
 
 export function CardWithForm() {
+  const { token, backendUrl, cartProducts, removeItemFromCart, addToCart } =
+    useContext(shopContext);
+  const [itemQuantity, setItemQuantity] = useState(0);
+
   return (
     <>
-    <Card className="w-[350px] mb-5">
-      <CardHeader>
-        <div className="grid grid-cols-[3fr_7fr] gap-5">
-          <img src="https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8U21hcnQlMjBXYXRjaHxlbnwwfHwwfHx8MA%3D%3D" 
-          className="rounded-xl"></img>
-          <div>
-            <Typography>product.name</Typography> 
-            <CardDescription>product.desc</CardDescription>
-            <Typography>product.price</Typography> 
-          </div>
-        </div>
-      </CardHeader>
-    </Card>
+      {cartProducts.map((item, index) => {
+        return (
+          <Card className="w-[350px] mb-4 mt-1" key={`cartItem_${index}`}>
+            <div className="p-2 h-24">
+              <div className="grid grid-cols-[3fr_7fr] gap-5 h-full">
+                <div className="w-full h-full overflow-hidden rounded-md">
+                  <img
+                    src={item.productId.image}
+                    className="h-full w-full object-cover rounded-md"
+                  />
+                </div>
+                <div className="relative">
+                  <p className="text-md font-semibold">{item.productId.name}</p>
+                  <p className="text-xl font-semibold">
+                    ${item.productId.price * item.quantity}
+                  </p>
+                  <p className="text-sm font-light text-gray-600">
+                    Quantity:
+                    <span className=" text-black"> {item.quantity}</span>
+                    {/* <input
+                      type="number"
+                      name=""
+                      id=""
+                      className="border p-1 pl-2 rounded-sm w-16"
+                      defaultValue={item.quantity}
+                    /> */}
+                  </p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div
+                          className="absolute right-0 top-0 p-2 rounded-full hover:bg-gray-500/50 cursor-pointer"
+                          onClick={() =>
+                            removeItemFromCart(item.productId.id, item.quantity)
+                          }
+                        >
+                          <MdDelete />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Remove Product</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </div>
+            </div>
+          </Card>
+        );
+      })}
     </>
-  )
+  );
 }
