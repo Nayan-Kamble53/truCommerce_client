@@ -25,7 +25,7 @@ import {
 
 const Sidebar = () => {
   return (
-    <Sheet className="h-full">
+    <Sheet className="h-full ">
       <SheetTrigger>
         <TooltipProvider>
           <Tooltip>
@@ -40,7 +40,7 @@ const Sidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </SheetTrigger>
-      <SheetContent className="">
+      <SheetContent className=" w-full max-h-screen overflow-y-scroll overflow-x-hidden">
         <SheetHeader>
           <SheetTitle>Your Cart</SheetTitle>
           <SheetDescription></SheetDescription>

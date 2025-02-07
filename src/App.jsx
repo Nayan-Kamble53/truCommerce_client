@@ -10,16 +10,18 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="h-full w-full bg-indigo-300">
+    <div className="min-h-screen w-full bg-indigo-300">
       <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/products/:productId" element={<ProductDetail />} />
-      </Routes>
-      <Footer/>
+      <div className="h-full">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+        </Routes>
+      </div>
+      <Footer />
       {/* toastify */}
       <ToastContainer position="bottom-right" autoClose={3000} pauseOnHover />
     </div>
