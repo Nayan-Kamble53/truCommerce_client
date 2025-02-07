@@ -10,10 +10,11 @@ import {
 
 const ProductDetail = () => {
   const { productId } = useParams();
-  const { backendUrl, navigate } = useContext(shopContext);
+  const { backendUrl, navigate, addToCart } = useContext(shopContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,7 +55,8 @@ const ProductDetail = () => {
             <p className="text-gray-300">{product.description}</p>
             <p className="text-gray-300">Experience cutting-edge technology with the {product.name}, designed for seamless performance, durability, and user convenience. Whether you are working, gaming, or enjoying entertainment, this device offers superior speed, crystal-clear audio/visuals, and reliable connectivity. With a sleek, modern design and advanced features, it is built to enhance your daily life while ensuring efficiency and comfort. Perfect for home, office, or on-the-go use, the {product.name} delivers exceptional quality and innovation you can trust.</p>
             <p className="text-xl font-semibold text-gray-300 mt-2">${product.price}</p>
-            <Button onClick={() => navigate("/")}>Back to Main</Button>
+            <Button className="mb-3" onClick={() => navigate("/")}>Back to Main</Button>
+            <Button onClick={() => addToCart(product.id, 1)}>Add to cart</Button>
             </ResizablePanel>
       </ResizablePanelGroup>
     </div>

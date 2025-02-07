@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { shopContext } from "../context/ShopContext.jsx";
 import { MdDelete } from "react-icons/md";
 import {
@@ -8,12 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip.jsx";
-import { Button } from "./ui/button.jsx";
 
 export function CardWithForm() {
-  const { token, backendUrl, cartProducts, removeItemFromCart, addToCart } =
+  const { cartProducts, removeItemFromCart } =
     useContext(shopContext);
-  const [itemQuantity, setItemQuantity] = useState(0);
 
   return (
     <>

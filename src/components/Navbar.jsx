@@ -29,14 +29,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="shadow-md bg-indigo-400">
+    <nav className="shadow-md bg-indigo-400 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link
           to="/"
           className="text-xl font-bold text-gray-800 flex items-center"
         >
-          <img src={logo} alt="Logo" className="mr-2 w-[100%] h-10" />
+          <img src={logo} alt="Logo" className="mr-2 w-[10vw] h-10" />
         </Link>
 
         {/* Navigation Links */}

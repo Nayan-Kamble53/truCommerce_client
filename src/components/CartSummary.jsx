@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Button } from "./ui/button";
 import { shopContext } from "@/context/ShopContext";
 
 const CartSummary = () => {
-  const { getCartAmount, cartAmount } = useContext(shopContext);
+  const { cartAmount } = useContext(shopContext);
 
   return (
     <div>

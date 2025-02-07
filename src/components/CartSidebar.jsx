@@ -3,17 +3,14 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
-  // SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
 import { Separator } from "./ui/separator";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { shopContext } from "@/context/ShopContext";
-
 import { CardWithForm } from "./CartItem";
 import CartSummary from "./CartSummary";
 import {
@@ -33,6 +30,13 @@ const Sidebar = () => {
             <TooltipTrigger asChild>
               <div className="relative">
                 <FaShoppingCart className="text-2xl text-gray-300" />
+                {
+                    cartProducts.length > 0 &&
+                    <span className="absolute -top-1 -right-2 bg-green-400 text-xs w-5 h-5 flex 
+                    justify-center items-center animate-bounce rounded-full text-white">
+                      {cartProducts.length}
+                    </span>
+                  }
               </div>
             </TooltipTrigger>
             <TooltipContent>
