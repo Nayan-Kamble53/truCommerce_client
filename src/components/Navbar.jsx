@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="shadow-md bg-indigo-500">
+    <nav className="shadow-md bg-indigo-400">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link
@@ -39,15 +39,12 @@ const Navbar = () => {
         </Link>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex space-x-6 text-xl">
           <Link to="/" className="text-gray-300 hover:text-blue-500">
             Home
           </Link>
           <Link to="/about" className="text-gray-300 hover:text-blue-500">
-            About
-          </Link>
-          <Link to="/contact" className="text-gray-300 hover:text-blue-500">
-            Contact
+            About Us
           </Link>
         </div>
 

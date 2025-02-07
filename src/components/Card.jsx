@@ -42,7 +42,7 @@ export function ProductCard({ product }) {
 
   return (
     // <Card className="mt-6 w-96">
-    <Card className="mt-6 w-full max-w-sm ">
+    <Card className="mt-6 w-full max-w-sm transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer" >
       <CardHeader color="blue-gray" className="relative h-56">
         <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover"/>
       </CardHeader>
@@ -52,6 +52,9 @@ export function ProductCard({ product }) {
         </Typography>
         <Typography className="text-sm text-gray-600 line-clamp-3">
           {product.description}
+        </Typography>
+        <Typography className="text-sm text-light-blue-600 line-clamp-3" onClick={() => navigate(`/products/${product.id}`)}>
+          Read more...
         </Typography>
       </CardBody> 
       <CardFooter className="pt-0">
