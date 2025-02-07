@@ -24,6 +24,7 @@ import {
 } from "./ui/tooltip";
 
 const Sidebar = () => {
+  const { cartProducts } = useContext(shopContext);
   return (
     <Sheet className="h-full ">
       <SheetTrigger>
@@ -47,9 +48,10 @@ const Sidebar = () => {
           <Separator />
         </SheetHeader>
 
-        {/* main content */}
-        <CardWithForm />
-        <CartSummary className="" />
+        <>
+          <CardWithForm />
+          <CartSummary className="" />
+        </>
       </SheetContent>
     </Sheet>
   );

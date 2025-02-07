@@ -50,7 +50,10 @@ export function CardWithForm() {
                         <div
                           className="absolute right-0 top-0 p-2 rounded-full hover:bg-gray-500/50 cursor-pointer"
                           onClick={() =>
-                            removeItemFromCart(item.productId.id, item.quantity)
+                            removeItemFromCart(
+                              item?.productId?.id,
+                              item?.quantity
+                            )
                           }
                         >
                           <MdDelete />

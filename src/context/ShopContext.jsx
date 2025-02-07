@@ -10,98 +10,109 @@ const ShopContextProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
-  const [token, setToken] = useState(
-    localStorage.getItem("token") ? localStorage.getItem("token") : ""
-  );
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [refreshToken, setRefreshToken] = useState(
-    localStorage.getItem("refresh-token")
-      ? localStorage.getItem("refresh-token")
-      : ""
+    localStorage.getItem("refresh-token") || ""
   );
   const [cartProducts, setCartProducts] = useState([]);
   const [cartId, setCartID] = useState([]);
-  const [cartAmount, setCartAmount] = useState([]);
+  const [cartAmount, setCartAmount] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("token", token);
     localStorage.setItem("refresh-token", refreshToken);
-  }, [token]);
+  }, [token, refreshToken]);
 
   const addToCart = async (productId, quantity) => {
     try {
       if (!token) {
-        console.log("clicked");
+        console.log("User not logged in");
         navigate("/login");
-        console.log("user not login");
+        return;
       }
 
-      // const token_decode = jwtDecode(token);
       const response = await axios.post(
-        backendUrl + "/v1/cart/",
-        {
-          productId,
-          quantity: quantity,
-        },
-        { headers: { Authorization: "Bearer " + token } }
+        `${backendUrl}/v1/cart/`,
+        { productId, quantity },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setCartID((prev) => [...prev, response.data.id]);
       toast.success("Item added to Your Cart");
+      getCartItems(); // Refresh cart after adding an item
+      getCartAmount(); // Update total price
     } catch (error) {
-      console.log(error);
+      console.error("Error adding to cart:", error);
     }
   };
 
   const getCartItems = async () => {
     try {
+      if (!token) return;
+
       const token_decode = jwtDecode(token);
       const userId = token_decode.sub;
-      const response = await axios.get(backendUrl + "/v1/cart/" + userId, {
-        headers: { Authorization: "Bearer " + token },
+      const response = await axios.get(`${backendUrl}/v1/cart/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       setCartProducts(response.data.products);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching cart items:", error);
     }
   };
-  useEffect(() => {
-    getCartItems();
-    getCartAmount();
-    removeItemFromCart();
-  }, [token, cartId]);
 
   const removeItemFromCart = async (productId, quantity) => {
     try {
-      if (!token) {
-        return;
-      }
-      // const token_decode = jwtDecode(token);
-      const response = await axios.delete(backendUrl + "/v1/cart/", {
+      if (!token) return;
+
+      const response = await axios.delete(`${backendUrl}/v1/cart/`, {
         headers: { Authorization: `Bearer ${token}` },
         data: { productId, quantity }, // ✅ Correct way to send data in DELETE request
       });
-      setCartID(response.data.id);
+
+      if (response.data) {
+        setCartID((prev) => prev.filter((id) => id !== response.data.id));
+        getCartItems(); // Refresh cart after item removal
+        getCartAmount(); // Update total price
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error removing item from cart:", error);
     }
   };
 
   const getCartAmount = async () => {
     try {
+      if (!token) return;
+
       const token_decode = jwtDecode(token);
       const userId = token_decode.sub;
-      const response = await axios.get(backendUrl + "/v1/cart/" + userId, {
-        headers: { Authorization: "Bearer " + token },
+      const response = await axios.get(`${backendUrl}/v1/cart/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      const cartTotal = response.data.products.reduce((total, product) => {
-        return (
-          total + Number(product.productId.price) * Number(product.quantity)
-        );
-      }, 0);
-      setCartAmount(cartTotal.toFixed(2));
+
+      if (response.data.products) {
+        const cartTotal = response.data.products.reduce((total, product) => {
+          return (
+            total + Number(product.productId.price) * Number(product.quantity)
+          );
+        }, 0);
+        setCartAmount(cartTotal.toFixed(2));
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error calculating cart total:", error);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      getCartItems();
+      getCartAmount();
+    }
+  }, [token, cartId]);
+
+  // console.log("Cart Products:", cartProducts);
+  // console.log("Cart Total:", cartAmount);
 
   const value = {
     backendUrl,
