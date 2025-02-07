@@ -21,7 +21,7 @@ const ProductDetail = () => {
         const response = await axios.get(`${backendUrl}/v1/products/${productId}`);
         setProduct(response.data);
       } catch (err) {
-        setError(err.response?.data?.message || "Product not found");
+        setError(err.response.message || "Product not found");
       } finally {
         setLoading(false);
       }
@@ -34,10 +34,10 @@ const ProductDetail = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="container mx-auto p-4 h-screen flex justify-center">
+    <div className="container h-screen mx-auto flex justify-center items-center">
       <ResizablePanelGroup
         direction="horizontal"
-        className="w-full max-w-4xl rounded-lg shadow-xl"
+        className="w-full max-w-4xl h-full max-h-[70vh] rounded-lg shadow-2xl bg-indigo-300"
       >
         {/* Product Image Panel */}
         <ResizablePanel defaultSize={50} className="flex justify-center items-center rounded-2xl">
@@ -47,14 +47,13 @@ const ProductDetail = () => {
             className="w-[20vw] rounded-3xl transform transition-all duration-500 ease-in-out hover:scale-105"
           />
         </ResizablePanel>
-        {/* <ResizableHandle /> */}
 
         {/* Product Details Panel */}
             <ResizablePanel defaultSize={50} className="flex flex-col justify-center p-6">
             <h2 className="text-3xl font-bold text-center">{product.name}</h2>
             <p className="text-gray-300">{product.description}</p>
             <p className="text-gray-300">Experience cutting-edge technology with the {product.name}, designed for seamless performance, durability, and user convenience. Whether you are working, gaming, or enjoying entertainment, this device offers superior speed, crystal-clear audio/visuals, and reliable connectivity. With a sleek, modern design and advanced features, it is built to enhance your daily life while ensuring efficiency and comfort. Perfect for home, office, or on-the-go use, the {product.name} delivers exceptional quality and innovation you can trust.</p>
-            <p className="text-xl font-semibold text-gray-400 mt-2">${product.price}</p>
+            <p className="text-xl font-semibold text-gray-300 mt-2">${product.price}</p>
             <Button onClick={() => navigate("/")}>Back to Main</Button>
             </ResizablePanel>
       </ResizablePanelGroup>
