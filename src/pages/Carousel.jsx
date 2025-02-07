@@ -15,7 +15,7 @@ export function CarouselDemo() {
     // Hide the entire carousel on mobile (only visible on sm+ screens)
     <div className="hidden sm:block">
       <div className="flex justify-center items-start mt-5">
-        <Carousel className="w-[90vw]">
+        <Carousel className="w-[90vw]" opts={{ loop: true }}>
           <CarouselContent>
             {images.map((src, index) => (
               <CarouselItem key={index} className="flex justify-center">

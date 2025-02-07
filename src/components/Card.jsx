@@ -41,7 +41,6 @@ export function ProductCard({ product }) {
   };
 
   return (
-    // <Card className="mt-6 w-96">
     <Card className="mt-6 w-full max-w-sm transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer" >
       <CardHeader color="blue-gray" className="relative h-56">
         <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover"/>
