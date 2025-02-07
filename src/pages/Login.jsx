@@ -38,6 +38,8 @@ const Login = () => {
         setEmail("");
         setPassword("");
       } else {
+        console.log("text");
+        
         const response = await axios.post(backendUrl + "/v1/auth/login", {
           email,
           password,
