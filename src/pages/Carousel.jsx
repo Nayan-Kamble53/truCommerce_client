@@ -7,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export function CarouselDemo() {
   const images = [img1, img1, img1, img1, img1]; 
@@ -14,7 +15,14 @@ export function CarouselDemo() {
   return (
     <div className="hidden sm:block">
       <div className="flex justify-center items-start mt-5">
-        <Carousel className="w-[90vw]" opts={{ loop: true }}>
+        <Carousel className="w-[85vw]" opts={{
+    align: "start",
+    loop: true,
+  }} plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}>
           <CarouselContent>
             {images.map((src, index) => (
               <CarouselItem key={index} className="flex justify-center">

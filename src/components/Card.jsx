@@ -7,15 +7,12 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import axios from "axios";
-// import { jwtDecode } from "jwt-decode";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 export function ProductCard({ product }) {
-  const { token, navigate, backendUrl, addToCart } = useContext(shopContext);
+  const { navigate, addToCart } = useContext(shopContext);
 
   return (
-    // <Card className="mt-6 w-96">
     <Card className="mt-6 w-full max-w-sm transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer">
       <CardHeader color="blue-gray" className="relative h-56">
         <img
@@ -28,8 +25,10 @@ export function ProductCard({ product }) {
         <Typography variant="h5" color="blue-gray" className="mb-2">
           {product.name}
         </Typography>
-        <Typography className="text-sm text-gray-600 line-clamp-3">
-          {product.description}
+        <Typography className="text-sm text-gray-600 line-clamp-2 h-12">
+          {product.description.length > 70
+            ? `${product.description.substring(0, 70)}...`
+            : product.description}
         </Typography>
         <Typography
           className="text-sm text-light-blue-600 line-clamp-3"
