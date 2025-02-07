@@ -25,28 +25,33 @@ const Login = () => {
   //   controlled input state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       if (currentState === "sign-up") {
         const response = await axios.post(backendUrl + "/v1/auth/register", {
           email,
           password,
         });
         toast.success(response.data.message);
+        const token = response.data.tokens.access.token;
+        setToken(token);
+        const refreshToken = response.data.tokens.refresh.token;
+        setRefreshToken(refreshToken);
         setEmail("");
         setPassword("");
+        toast.success("Login Successfully");
+        navigate("/");
       } else {
-        console.log("text");
-        
+        setLoading(true);
         const response = await axios.post(backendUrl + "/v1/auth/login", {
           email,
           password,
         });
-        console.log(response);
         const token = response.data.tokens.access.token;
-        console.log(token);
         setToken(token);
         const refreshToken = response.data.tokens.refresh.token;
         setRefreshToken(refreshToken);
@@ -57,13 +62,15 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       {/* card component */}
-      <Card className="w-80 max-w-screen-lg sm:w-96">
+      <Card className="w-80 max-w-screen-lg sm:w-96 shadow-2xl">
         <form onSubmit={handleSubmit} className=" w-80 max-w-screen-lg sm:w-96">
           <CardHeader>
             <CardTitle>
@@ -116,7 +123,13 @@ const Login = () => {
             </Label>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className=" w-full">
+            <Button type="submit" className=" w-full" disabled={loading}>
+              {loading && (
+                <img
+                  src="src\assets\loading.png"
+                  className="w-4 animate-spin"
+                />
+              )}
               {currentState === "sign-up" ? "Sign Up" : "Sign In"}
             </Button>
           </CardFooter>

@@ -2,54 +2,54 @@ import { FaShoppingCart } from "react-icons/fa";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
+  SheetFooter,
   // SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 import { Separator } from "./ui/separator";
 import { useContext, useEffect } from "react";
 import { shopContext } from "@/context/ShopContext";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+
 import { CardWithForm } from "./CartItem";
+import CartSummary from "./CartSummary";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 const Sidebar = () => {
-  const { token, backendUrl } = useContext(shopContext);
-  // const [cartProducts, setCartProducts] = useState([]);
-
-  const getCartItems = async () => {
-    console.log("first");
-    try {
-      const token_decode = jwtDecode(token);
-      const userId = token_decode.sub;
-      const response = await axios.get(backendUrl + "/v1/cart/" + userId, {
-        headers: { Authorization: "Bearer " + token },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getCartItems();
-  }, []);
-
   return (
-    <Sheet>
+    <Sheet className="h-full">
       <SheetTrigger>
-        <div className="relative">
-          <FaShoppingCart className="text-2xl text-gray-300" />
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="relative">
+                <FaShoppingCart className="text-2xl text-gray-300" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Your Cart</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="">
         <SheetHeader>
           <SheetTitle>Your Cart</SheetTitle>
+          <SheetDescription></SheetDescription>
           <Separator />
         </SheetHeader>
 
         {/* main content */}
-        <CardWithForm/>
+        <CardWithForm />
+        <CartSummary className="" />
       </SheetContent>
     </Sheet>
   );
