@@ -66,6 +66,7 @@ const ShopContextProvider = ({ children }) => {
   useEffect(() => {
     getCartItems();
     getCartAmount();
+    removeItemFromCart();
   }, [token, cartId]);
 
   const removeItemFromCart = async (productId, quantity) => {

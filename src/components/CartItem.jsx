@@ -20,8 +20,8 @@ export function CardWithForm() {
       {cartProducts.map((item, index) => {
         return (
           <Card className="w-[350px] mb-4 mt-1" key={`cartItem_${index}`}>
-            <div className="p-2 h-24">
-              <div className="grid grid-cols-[3fr_7fr] gap-5 h-full">
+            <div className="p-2 h-24 w-full">
+              <div className="w-full grid grid-cols-[3fr_7fr] gap-5 h-full">
                 <div className="w-full h-full overflow-hidden rounded-md">
                   <img
                     src={item.productId.image}

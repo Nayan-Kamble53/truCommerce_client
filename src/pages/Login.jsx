@@ -68,7 +68,7 @@ const Login = () => {
   };
 
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="h-screen flex justify-center items-center">
       {/* card component */}
       <Card className="w-80 max-w-screen-lg sm:w-96 shadow-2xl">
         <form onSubmit={handleSubmit} className=" w-80 max-w-screen-lg sm:w-96">
