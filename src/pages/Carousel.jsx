@@ -9,10 +9,9 @@ import {
 } from "@/components/ui/carousel";
 
 export function CarouselDemo() {
-  const images = [img1, img1, img1, img1, img1]; // Store image paths directly
+  const images = [img1, img1, img1, img1, img1]; 
 
   return (
-    // Hide the entire carousel on mobile (only visible on sm+ screens)
     <div className="hidden sm:block">
       <div className="flex justify-center items-start mt-5">
         <Carousel className="w-[90vw]" opts={{ loop: true }}>
