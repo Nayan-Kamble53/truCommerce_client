@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import axios from "axios";
 import { ProductCard } from "./Card";
-import { shopContext } from "@/context/ShopContext";
+// import { shopContext } from "@/context/ShopContext";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { backendUrl } = useContext(shopContext);
+  // const { backendUrl } = useContext(shopContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
