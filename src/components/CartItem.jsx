@@ -8,14 +8,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip.jsx";
+import { Button } from "./ui/button.jsx";
 
 export function CardWithForm() {
-  const { cartProducts, removeItemFromCart } =
-    useContext(shopContext);
+  const {
+    cartProducts,
+    removeItemFromCart,
+    increaseCartItem,
+    decreaseCartItem,
+  } = useContext(shopContext);
 
   return (
     <>
       {cartProducts.map((item, index) => {
+        if (!item) return;
         return (
           <Card className="w-[350px] mb-4 mt-1" key={`cartItem_${index}`}>
             <div className="p-2 h-24 w-full">
@@ -28,20 +34,46 @@ export function CardWithForm() {
                 </div>
                 <div className="relative">
                   <p className="text-md font-semibold">{item.productId.name}</p>
-                  <p className="text-xl font-semibold">
-                    ${item.productId.price * item.quantity}
+                  <p className="text-md font-medium">
+                    ${item.productId.price.toFixed(2)}
                   </p>
-                  <p className="text-sm font-light text-gray-600">
-                    Quantity:
-                    <span className=" text-black"> {item.quantity}</span>
-                    {/* <input
-                      type="number"
-                      name=""
-                      id=""
-                      className="border p-1 pl-2 rounded-sm w-16"
-                      defaultValue={item.quantity}
-                    /> */}
-                  </p>
+                  <div className="flex gap-5 items-end justify-between">
+                    <div className="flex items-center ">
+                      <p className="text-sm font-light text-gray-600">
+                        Quantity:
+                      </p>
+                      <div className="flex items-center px-2 rounded-sm justify-evenly">
+                        <button
+                          className="flex items-center justify-center cursor-pointer w-4 h-4 rounded-full hover:bg-gray-500 disabled:text-gray-400 "
+                          onClick={() =>
+                            decreaseCartItem(item.productId.id, item.quantity)
+                          }
+                          disabled={item.quantity === 1}
+                        >
+                          -
+                        </button>
+                        <p className="flex items-center justify-center w-4">
+                          {item.quantity}
+                        </p>
+                        <button
+                          className="flex items-center justify-center cursor-pointer w-4 h-4 rounded-full hover:bg-gray-500"
+                          onClick={() =>
+                            increaseCartItem(item.productId.id, item.quantity)
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <p className="text-md font-semibold">
+                      {/* <span className="text-sm font-light text-gray-600">
+                        Total:
+                      </span>{" "} */}
+                      ${(item.productId.price * item.quantity).toFixed(2)}
+                    </p>
+                  </div>
+
+                  {/* delete Item from cart Button */}
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>

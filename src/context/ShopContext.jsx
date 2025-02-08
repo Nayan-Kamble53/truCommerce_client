@@ -114,6 +114,58 @@ const ShopContextProvider = ({ children }) => {
   // console.log("Cart Products:", cartProducts);
   // console.log("Cart Total:", cartAmount);
 
+  const increaseCartItem = async (productId, currentQuantity) => {
+    try {
+      let newQuantity = currentQuantity + 1;
+
+      await axios.put(
+        `${backendUrl}/v1/cart/update`,
+        {
+          productId,
+          quantity: newQuantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setCartProducts((prev) =>
+        prev.map((item) =>
+          item.productId?.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+      getCartItems();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const decreaseCartItem = async (productId, currentQuantity) => {
+    try {
+      if (currentQuantity <= 1) return;
+
+      let newQuantity = currentQuantity - 1;
+
+      await axios.put(
+        `${backendUrl}/v1/cart/update`,
+        {
+          productId,
+          quantity: newQuantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setCartProducts((prev) =>
+        prev.map((item) =>
+          item.productId?.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const value = {
     backendUrl,
     token,
@@ -126,6 +178,8 @@ const ShopContextProvider = ({ children }) => {
     removeItemFromCart,
     getCartAmount,
     cartAmount,
+    increaseCartItem,
+    decreaseCartItem,
   };
 
   return <shopContext.Provider value={value}>{children}</shopContext.Provider>;
