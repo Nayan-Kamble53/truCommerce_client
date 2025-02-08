@@ -22,6 +22,14 @@ import {
 
 const Sidebar = () => {
   const { cartProducts } = useContext(shopContext);
+
+  const getCartCount = () => {
+    if (cartProducts.length <= 0) return;
+
+    let cartCount = 0;
+    cartProducts.map((item) => (cartCount += item.quantity));
+    return cartCount;
+  };
   return (
     <Sheet className="h-full ">
       <SheetTrigger>
@@ -30,13 +38,14 @@ const Sidebar = () => {
             <TooltipTrigger asChild>
               <div className="relative">
                 <FaShoppingCart className="text-2xl text-gray-300" />
-                {
-                    cartProducts.length > 0 &&
-                    <span className="absolute -top-1 -right-2 bg-green-400 text-xs w-5 h-5 flex 
-                    justify-center items-center animate-bounce rounded-full text-white">
-                      {cartProducts.length}
-                    </span>
-                  }
+                {cartProducts.length > 0 && (
+                  <span
+                    className="absolute -top-1 -right-2 bg-green-400 text-xs w-5 h-5 flex 
+                    justify-center items-center animate-bounce rounded-full text-white"
+                  >
+                    {getCartCount()}
+                  </span>
+                )}
               </div>
             </TooltipTrigger>
             <TooltipContent>
