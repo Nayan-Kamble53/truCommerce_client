@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const shopContext = createContext();
 
@@ -27,6 +27,7 @@ const ShopContextProvider = ({ children }) => {
     try {
       if (!token) {
         console.log("User not logged in");
+        toast.info("User isn't loged in, Login first");
         navigate("/login");
         return;
       }
@@ -38,7 +39,7 @@ const ShopContextProvider = ({ children }) => {
       );
 
       setCartID((prev) => [...prev, response.data.id]);
-      toast.success("Item added to Your Cart");
+      toast.success("Item added to cart");
       getCartItems(); // Refresh cart after adding an item
       getCartAmount(); // Update total price
     } catch (error) {
@@ -110,6 +111,12 @@ const ShopContextProvider = ({ children }) => {
       getCartAmount();
     }
   }, [token, cartId]);
+  // useEffect(() => {
+  //   if (cartProducts.length > 0) {
+  //     getCartItems();
+  //     getCartAmount();
+  //   }
+  // }, [cartProducts]);
 
   // console.log("Cart Products:", cartProducts);
   // console.log("Cart Total:", cartAmount);
@@ -130,11 +137,10 @@ const ShopContextProvider = ({ children }) => {
       setCartProducts((prev) =>
         prev.map((item) =>
           item.productId?.id === productId
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: newQuantity }
             : item
         )
       );
-      getCartItems();
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +163,7 @@ const ShopContextProvider = ({ children }) => {
       setCartProducts((prev) =>
         prev.map((item) =>
           item.productId?.id === productId
-            ? { ...item, quantity: item.quantity - 1 }
+            ? { ...item, quantity: newQuantity }
             : item
         )
       );

@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { shopContext } from "../context/ShopContext";
 import axios from "axios";
-import { toast } from "react-toastify";
 import {
   Card,
   CardContent,
@@ -13,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 const Login = () => {
   // context providers
@@ -27,25 +27,40 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const isValidPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d).+$/.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       if (currentState === "sign-up") {
+        if (password.length < 8) {
+          toast.error("password must be at least 8 characters");
+          return;
+        }
+        if (!isValidPassword(password)) {
+          toast.error(
+            "password must contain atleast 1 charectar and 1 number "
+          );
+          return;
+        }
+
         const response = await axios.post(backendUrl + "/v1/auth/register", {
           email,
           password,
         });
-        toast.success(response.data.message);
         const token = response.data.tokens.access.token;
         setToken(token);
         const refreshToken = response.data.tokens.refresh.token;
         setRefreshToken(refreshToken);
         setEmail("");
         setPassword("");
-        toast.success("Login Successfully");
+        toast.success("Registered Successfully");
         navigate("/");
       } else {
+        if (password.length <= 0) return toast.error("Enter Your Password!");
         setLoading(true);
         const response = await axios.post(backendUrl + "/v1/auth/login", {
           email,
@@ -61,6 +76,19 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error(
+          currentState === "sign-up"
+            ? "Email Already exists!"
+            : "Incorrect email and password"
+        ); // Show error toast
+      } else {
+        toast.error(
+          currentState === "sign-up"
+            ? "Registration failed. Try again! "
+            : "Login failed. Try again! "
+        );
+      }
       console.log(error);
     } finally {
       setLoading(false);
@@ -68,7 +96,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-[60vh] flex justify-center items-center">
       {/* card component */}
       <Card className="w-80 max-w-screen-lg sm:w-96 shadow-2xl">
         <form onSubmit={handleSubmit} className=" w-80 max-w-screen-lg sm:w-96">

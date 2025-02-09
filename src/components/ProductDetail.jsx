@@ -3,10 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { shopContext } from "@/context/ShopContext";
 import { Button } from "@material-tailwind/react";
-import {
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -15,11 +12,13 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${backendUrl}/v1/products/${productId}`);
+        const response = await axios.get(
+          `${backendUrl}/v1/products/${productId}`
+        );
+        console.log(response);
         setProduct(response.data);
       } catch (err) {
         setError(err.response.message || "Product not found");
@@ -41,7 +40,10 @@ const ProductDetail = () => {
         className="w-full max-w-4xl h-full max-h-[70vh] rounded-lg shadow-2xl bg-indigo-300"
       >
         {/* Product Image Panel */}
-        <ResizablePanel defaultSize={50} className="flex justify-center items-center rounded-2xl">
+        <ResizablePanel
+          defaultSize={50}
+          className="flex justify-center items-center rounded-2xl"
+        >
           <img
             src={product.image}
             alt={product.name}
@@ -50,14 +52,31 @@ const ProductDetail = () => {
         </ResizablePanel>
 
         {/* Product Details Panel */}
-            <ResizablePanel defaultSize={50} className="flex flex-col justify-center p-6">
-            <h2 className="text-3xl font-bold text-center">{product.name}</h2>
-            <p className="text-gray-300">{product.description}</p>
-            <p className="text-gray-300">Experience cutting-edge technology with the {product.name}, designed for seamless performance, durability, and user convenience. Whether you are working, gaming, or enjoying entertainment, this device offers superior speed, crystal-clear audio/visuals, and reliable connectivity. With a sleek, modern design and advanced features, it is built to enhance your daily life while ensuring efficiency and comfort. Perfect for home, office, or on-the-go use, the {product.name} delivers exceptional quality and innovation you can trust.</p>
-            <p className="text-xl font-semibold text-gray-300 mt-2">${product.price}</p>
-            <Button className="mb-3" onClick={() => navigate("/")}>Back to Main</Button>
-            <Button onClick={() => addToCart(product.id, 1)}>Add to cart</Button>
-            </ResizablePanel>
+        <ResizablePanel
+          defaultSize={50}
+          className="flex flex-col justify-center p-6"
+        >
+          <h2 className="text-3xl font-bold text-center">{product.name}</h2>
+          <p className="text-gray-300">{product.description}</p>
+          <p className="text-gray-300">
+            Experience cutting-edge technology with the {product.name}, designed
+            for seamless performance, durability, and user convenience. Whether
+            you are working, gaming, or enjoying entertainment, this device
+            offers superior speed, crystal-clear audio/visuals, and reliable
+            connectivity. With a sleek, modern design and advanced features, it
+            is built to enhance your daily life while ensuring efficiency and
+            comfort. Perfect for home, office, or on-the-go use, the{" "}
+            {product.name} delivers exceptional quality and innovation you can
+            trust.
+          </p>
+          <p className="text-xl font-semibold text-gray-300 mt-2">
+            ${product.price}
+          </p>
+          <Button className="mb-3" onClick={() => navigate("/")}>
+            Back to Main
+          </Button>
+          <Button onClick={() => addToCart(product.id, 1)}>Add to cart</Button>
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );
