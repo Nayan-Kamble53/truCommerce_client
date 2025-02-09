@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProductDetail from "./components/ProductDetail";
 import Footer from "./components/Footer";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Footer />
       {/* toastify */}
       <ToastContainer position="bottom-right" autoClose={3000} pauseOnHover />
+      <Toaster />
     </div>
   );
 }

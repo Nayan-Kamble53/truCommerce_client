@@ -13,6 +13,7 @@ import {
 import { useContext } from "react";
 import { shopContext } from "@/context/ShopContext";
 import axios from "axios";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const { token, backendUrl, refreshToken } = useContext(shopContext);
@@ -23,6 +24,7 @@ const Navbar = () => {
       localStorage.setItem("token", "");
       localStorage.setItem("refresh-token", "");
       window.location.reload();
+      toast.success("User Logged out");
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +52,7 @@ const Navbar = () => {
         </div>
 
         {/* Buttons and Profile */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 w-[10vw] justify-end">
           {!token && (
             <Link
               to="/login"
@@ -72,7 +74,9 @@ const Navbar = () => {
             {token && (
               <DropdownMenuContent className="w-48">
                 <DropdownMenuItem>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile" className="w-full h-full text-left">
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-red-500 cursor-pointer">

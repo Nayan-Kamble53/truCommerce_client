@@ -1,4 +1,5 @@
 import { FaShoppingCart } from "react-icons/fa";
+import { HiOutlineShoppingCart } from "react-icons/hi2";
 import {
   Sheet,
   SheetContent,
@@ -62,8 +63,17 @@ const Sidebar = () => {
         </SheetHeader>
 
         <>
-          <CardWithForm />
-          <CartSummary className="" />
+          {cartProducts.length <= 0 ? (
+            <div className="w-full h-[80%] text-gray-500 flex flex-col items-center justify-center">
+              <HiOutlineShoppingCart className="w-24 h-40" />
+              <p className="text-lg">Your cart is empty.</p>
+            </div>
+          ) : (
+            <>
+              <CardWithForm />
+              <CartSummary className="" />
+            </>
+          )}
         </>
       </SheetContent>
     </Sheet>
