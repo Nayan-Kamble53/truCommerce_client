@@ -17,7 +17,7 @@ const ShopContextProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
   const [cartId, setCartID] = useState([]);
   const [cartAmount, setCartAmount] = useState(0);
-
+  
   useEffect(() => {
     localStorage.setItem("token", token);
     localStorage.setItem("refresh-token", refreshToken);
@@ -111,12 +111,7 @@ const ShopContextProvider = ({ children }) => {
       getCartAmount();
     }
   }, [token, cartId]);
-  // useEffect(() => {
-  //   if (cartProducts.length > 0) {
-  //     getCartItems();
-  //     getCartAmount();
-  //   }
-  // }, [cartProducts]);
+
 
   // console.log("Cart Products:", cartProducts);
   // console.log("Cart Total:", cartAmount);
@@ -124,8 +119,8 @@ const ShopContextProvider = ({ children }) => {
   const increaseCartItem = async (productId, currentQuantity) => {
     try {
       let newQuantity = currentQuantity + 1;
-
-      await axios.put(
+      
+      const response =await axios.put(
         `${backendUrl}/v1/cart/update`,
         {
           productId,
@@ -133,6 +128,7 @@ const ShopContextProvider = ({ children }) => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      
 
       setCartProducts((prev) =>
         prev.map((item) =>
@@ -141,6 +137,10 @@ const ShopContextProvider = ({ children }) => {
             : item
         )
       );
+      getCartAmount();
+
+      // await getCartAmount()
+      // await getCartItems()
     } catch (error) {
       console.log(error);
     }
@@ -167,6 +167,8 @@ const ShopContextProvider = ({ children }) => {
             : item
         )
       );
+      getCartAmount();
+
     } catch (error) {
       console.log(error);
     }

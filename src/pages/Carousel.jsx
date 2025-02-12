@@ -20,7 +20,7 @@ export function CarouselDemo() {
     loop: true,
   }} plugins={[
         Autoplay({
-          delay: 2000,
+          delay: 5000,
         }),
       ]}>
           <CarouselContent>
